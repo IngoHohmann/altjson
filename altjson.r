@@ -7,8 +7,8 @@ Rebol [
 	Version: 0.3.7
 	Purpose: "De/Serialize a JSON string to Rebol data."
 	Rights: http://opensource.org/licenses/Apache-2.0
-	Type: 'module
-	Name: 'rgchris.altjson
+	Type: module
+	Name: rgchris.altjson
 	Exports: [load-json to-json]
 	History: [
 		02-May-2016 0.3.7 "Support for /, : and , characters in JSON object keys"
@@ -107,7 +107,7 @@ load-json: use [
 				] :mk
 			]
 
-			func [text [string! none!] /mk][
+			func [text [string! blank!] /mk][
 				either none? text [copy ""][
 					all [parse/all text [any [to "\" escape] to end] text]
 				]
@@ -331,7 +331,7 @@ to-json: use [
 		  lookup
 		| number! (emit here/1)
 		| [logic! | 'true | 'false] (emit to string! here/1)
-		| [none! | 'none] (emit 'null)
+		| [blank! | 'none] (emit 'null)
 		| date! emit-date
 		| issue! emit-issue
 		| [
